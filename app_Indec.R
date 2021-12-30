@@ -6,6 +6,8 @@ source('global_indec.R', encoding = 'UTF-8')
 
 
 
+
+
 ui = fluidPage(
   h1(
     'Inflacion Argentina',  
