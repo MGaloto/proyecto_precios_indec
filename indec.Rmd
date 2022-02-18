@@ -1,0 +1,223 @@
+---
+title: "Pipeline de Datos"
+author: "Maximiliano Galoto"
+subtitle: "Automatizacion de extraccion de datos del indec."
+output:
+ prettydoc::html_pretty:
+    theme: lumen
+    highlight: github
+    toc: true
+    toc_depth: 2
+    math: katex
+
+
+---
+
+
+
+
+<br>
+</br>
+
+
+```{css my-header-colors, echo = FALSE}
+.page-header {
+    background-image: linear-gradient(200deg, violet, blue);
+    border: solid 1px black;
+    border-radius: .3rem;
+}
+
+
+```
+
+
+```{css , echo = FALSE}
+
+.myimg {
+  border: solid 1px black;
+}
+
+
+```
+
+
+<style type="text/css">
+
+
+
+
+.toc .toc-box {
+    padding: 1.5rem;
+    background-color: #f5f5f5;
+    border: solid 1px #6b6b6b;
+    border-radius: .3rem;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+
+.main-content h2, .main-content h3, .main-content h4, .main-content h5, .main-content h6 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    color: black;
+}
+
+
+.main-content h1 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 750;
+    background-image: linear-gradient(200deg, violet, blue);
+    color: white;
+    text-align: center;
+    border: solid 1px black;
+    border-radius: .3rem;
+    background-color: #f5f5f5;
+} 
+
+
+
+
+
+
+.main-content table th {
+    font-weight: 700;
+    background-image: linear-gradient(200deg, violet, blue);
+    color: white;
+}
+
+.main-content table td{
+    padding: .5rem 1rem;
+    border-bottom: 1px solid #e9ebec;
+    text-align: left;
+    color: black;
+}
+
+.main-content table tr:nth-child(odd) {
+    background-color: #fcfcfc;
+}
+
+.main-content table tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+
+h1.title {
+  font-size: 58px;
+  color: white;
+  text-align: center;
+}
+h3.subtitle { 
+    font-size: 24px;
+  font-family: "Times New Roman", Times, serif;
+  color: white ;
+  text-align: center;
+}
+h4.author { 
+    font-size: 20px;
+  font-family: "Times New Roman", Times, serif;
+  color:white ;
+  text-align: center;
+}
+
+
+
+
+
+</style>
+
+<br>
+</br>
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tinytex)
+
+
+# app.diagrams.net
+
+```
+
+
+<div style="text-align: left" class="toc-box">
+# 1 - Introduccion
+</div>
+<div style="text-align: right" class="toc-box">
+ <a href="#top">Volver al Inicio</a>
+</div>
+<br>
+</br>
+
+El siguiente trabajo consiste en desarrollar un proceso de extracción, carga y transformación de datos de forma automática de la pagina del [Indec](https://www.indec.gob.ar/).
+
+Mediante el lenguaje de programación R se extraen los datos de la pagina, se transforman a una estructura deseada para almacenar en una base de datos y su posterior explotación visual y cuantitativa.
+
+El trabajo contiene paso por paso un caso real explicado de forma teórica y con el código adjunto.
+
+
+
+<br>
+</br>
+<div style="text-align: left" class="toc-box">
+# 2 - PipeLine de Datos
+</div>
+<div style="text-align: right" class="toc-box">
+ <a href="#top">Volver al Inicio</a>
+</div>
+<br>
+</br>
+
+
+
+Una pipeline de datos es una construcción lógica que representa un proceso dividido en fases. Las pipelines de datos se caracterizan por definir el conjunto de pasos o fases y las tecnologías involucradas en un proceso de movimiento o procesamiento de datos.
+
+
+
+```{r, echo=FALSE, out.width="80%", fig.align='center'}
+knitr::include_graphics("etl.png")
+
+# ,out.extra='class="myimg"'
+
+```
+
+
+
+
+<br>
+</br>
+<div style="text-align: left" class="toc-box">
+# 3 - Librerias
+</div>
+<div style="text-align: right" class="toc-box">
+ <a href="#top">Volver al Inicio</a>
+</div>
+<br>
+</br>
+
+
+
+A continuación se detallan las librerías necesarias para el trabajo:
+
+
+
+```{r, warning= FALSE, message=FALSE}
+
+library(tidyverse)
+library(ggplot2)
+library(readr)  
+library(dplyr)  
+library(readxl)
+library(plotly)
+library(ggthemes)
+library(reshape)
+library(gdata)
+library(highcharter)
+
+```
