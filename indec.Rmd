@@ -127,6 +127,11 @@ h4.author {
 }
 
 
+.main-content table th {
+    font-weight: 700;
+    background-color: blue;
+    color: #fff;
+}
 
 
 
@@ -219,5 +224,141 @@ library(ggthemes)
 library(reshape)
 library(gdata)
 library(highcharter)
+library(DT)
 
 ```
+
+
+
+
+
+<br>
+</br>
+<div style="text-align: left" class="toc-box">
+# 4 - Importacion del archivo
+</div>
+<div style="text-align: right" class="toc-box">
+ <a href="#top">Volver al Inicio</a>
+</div>
+<br>
+</br>
+
+
+Para este trabajo se estará utilizando un archivo de Excel suministrado por el Indec que contiene los indices de precios mensuales para cada rubro donde la ponderación de los mismos nos da como resultado el indice general. Todo estos datos están semi-estructurados, es decir, tenemos que programar en R para estructurar los datos. La idea es que los rubros de inflacionario queden como variables y que para cada uno de los valores de las variables se le asigne el mes y el año. Esta estructura nos servirá para obtener una planilla con series de tiempo de todos los rubros principales y poder trabajar mejor para ver los cambios en las tasas y el nivel de inflación de todos los rubros durante los últimos 5 años.
+
+A continuación podemos observar una muestra de como vienen los datos del Indec:
+
+
+```{r, warning= FALSE, message=FALSE}
+
+download.file("https://www.indec.gob.ar/ftp/cuadros/economia/sh_ipc_aperturas.xls","indec_descargado.xls", mode="wb")
+
+indec = read_excel('indec_descargado.xls')
+
+datatable(indec[, 1:8])
+
+```
+
+
+Podemos tomar desde la fila 8 a la 52 que contiene todos los rubros que necesitamos:
+
+
+```{r, warning= FALSE, message=FALSE}
+
+datatable(indec[8:52, 1:8])
+
+indec = indec[8:52,]
+
+```
+
+Sabemos que los datos arrancan del 01/2017, por lo tanto creamos una secuencia de fechas que arranque en 01/2017, que corra por mes y llegue hasta el numero final de las columnas de nuestro nuevo set de datos:
+
+
+```{r, warning= FALSE, message=FALSE}
+
+# A n_col le tenemos que restar la variable de los rubros:
+
+n_col = ncol(indec) - 1
+
+
+periodos = seq(as.Date("2017/1/1"), by = "month", length.out = n_col)
+
+
+```
+
+
+
+Hacemos la transpuesta de nuestro set de datos:
+
+
+```{r, message=FALSE, warning=FALSE}
+
+indec = data.frame(t(indec))
+
+```
+
+
+Colocamos como nombre de columnas todos los rubros:
+
+```{r, message=FALSE, warning=FALSE}
+
+colnames(indec) = c(indec[1,])
+
+```
+
+Modificamos las filas y eliminamos la fila que ya no nos sirve:
+
+
+```{r, message=FALSE, warning=FALSE}
+row.names(indec) = 1:nrow(indec)
+
+
+indec = indec[-1,]
+
+
+```
+
+Limpieza de algunos datos que vienen mal:
+
+<ui>
+
+<li>
+Eliminamos espacios vacíos
+</li>
+
+
+<li>
+Convertimos a numéricos todos los datos
+</li>
+
+</ui>
+
+```{r, message=FALSE, warning=FALSE}
+
+indec[ , c(1:(ncol(indec)))] = apply(indec[ , c(1:(ncol(indec)))], 2, trimws )
+
+
+
+
+indec[ , c(1:(ncol(indec)))] = apply(indec[ , c(1:(ncol(indec)))], 2,     
+                            function(x) as.numeric(as.character(x))) 
+
+
+```
+
+Añadimos la columna periodos:
+
+```{r}
+
+
+indec$periodos = periodos
+
+
+indec[,c(1,2,3,4,5,6,46)] %>% datatable(extensions = 'Buttons',
+            options = list(
+                           buttons = c('copy', 'csv', 'excel', 'pdf', 'print')))
+
+
+
+```
+
