@@ -6,10 +6,10 @@ Proyecto en Curso de Scrap en Indec y creacion de un Dashboard sobre los rubros 
 
 
 <p>
-<a href="https://rstudio.github.io/distill/" rel="nofollow"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/dplyr.png" align="right" width="150" style="max-width: 100%;"></a>
-<a href="https://rstudio.github.io/distill/" rel="nofollow"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/dplyr.png" align="right" width="150" style="max-width: 100%;"></a>
+<a href="https://dplyr.tidyverse.org/" rel="nofollow"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/dplyr.png" align="right" width="150" style="max-width: 100%;"></a>
+<a href="https://www.tidyverse.org/" rel="nofollow"><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/tidyverse.png" align="right" width="150" style="max-width: 100%;"></a>
 </p>
-Este proyecto consiste en crear un PipeLine de Datos desde el [Indec](https://www.indec.gob.ar/), una posterior limpieza, carga a base de datos y explotacion visual de los datos.
+Este proyecto consiste en crear un PipeLine de Datos desde el ![Indec](https://www.indec.gob.ar/), una posterior limpieza, carga a base de datos y explotacion visual de los datos.
 
 
 # Incluye
@@ -48,3 +48,19 @@ Graficos Dinamicos y Estaticos.
 
 
 </ui>
+
+
+# Link
+
+<ui>
+
+<li>
+https://rpubs.com/MGaloto/pipeline_datos
+</li>
+
+
+</ui>
+
+
+
+
